@@ -7,5 +7,14 @@ def index(request):
     })
 
 
+TAGS = ['обучение', 'ООП', 'hexlet']
+
+
 def about(request):
-    return render(request, 'about.html')
+    return render(
+        request,
+        'about.html',
+        context={
+            'tags': TAGS
+        }
+    )
