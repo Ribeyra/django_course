@@ -4,6 +4,8 @@ from django.views import View
 # Create your views here.
 from django.http import HttpResponse     # noqa f401
 
+from .models import Article
+
 
 def index(request, tags, article_id):
     # app_name = request.resolver_match.app_name
@@ -18,12 +20,18 @@ def index(request, tags, article_id):
 
 
 class IndexView(View):
+    # def get(self, request, *args, **kwargs):
+    #     app_name = request.resolver_match.app_name
+    #     return render(
+    #         request,
+    #         'articles/index.html',
+    #         context={
+    #             'app_name': app_name
+    #         }
+    #     )
+
     def get(self, request, *args, **kwargs):
-        app_name = request.resolver_match.app_name
-        return render(
-            request,
-            'articles/index.html',
-            context={
-                'app_name': app_name
-            }
-        )
+        articles = Article.objects.all()[:15]
+        return render(request, 'articles/index.html', context={
+            'articles': articles,
+        })
