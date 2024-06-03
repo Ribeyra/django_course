@@ -1,10 +1,10 @@
-from django.shortcuts import render     # noqa f401
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 
 # Create your views here.
 from django.http import HttpResponse     # noqa f401
 
-from .models import Article
+from .models import Article    # Comment
 
 
 def index(request, tags, article_id):
@@ -35,3 +35,31 @@ class IndexView(View):
         return render(request, 'articles/index.html', context={
             'articles': articles,
         })
+
+
+class ArticleView(View):
+    def get(self, request, *args, **kwargs):
+        article = get_object_or_404(Article, id=kwargs['id'])
+        return render(
+            request,
+            'articles/show.html',
+            context={
+                'article': article,
+            }
+        )
+
+
+# class ArticleCommentsView(View):
+#     def get(self, request, *args, **kwargs):
+#         comment = get_object_or_404(
+#             Comment,
+#             id=kwargs['id'],
+#             article__id=kwargs['article_id']
+#         )
+#         return render(
+#             request,
+#             'articles/show_comment.html',
+#             context={
+#                 'comment': comment,
+#             }
+#         )

@@ -7,4 +7,10 @@ app_name = 'article'  # Задаем пространство имен для м
 urlpatterns = [
     path('', views.IndexView.as_view(), name='article_index'),
     path('<tags>/<int:article_id>', views.index, name='article'),
+    path('<int:id>/', views.ArticleView.as_view(), name='view_article'),
+    # path(
+    #     '<int:article_id>/comments/<int:id>/',
+    #     views.ArticleCommentsView.as_view(),
+    #     name='view_comment'
+    # ),
 ]
